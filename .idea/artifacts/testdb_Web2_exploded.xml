@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="testdb:Web2 exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/testdb_Web2_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="testdb/web/Web2" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="testdb" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mysql-connector-java-5.1.49" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="testdb/web/Web" />
+    </root>
+  </artifact>
+</component>
