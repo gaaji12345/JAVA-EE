@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="crud">
+    <output-path>$PROJECT_DIR$/out/artifacts/crud</output-path>
+    <root id="archive" name="crud.war">
+      <element id="javaee-facet-resources" facet="Cruds/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Cruds" />
+          <element id="library" level="project" name="mysql-connector-java-5.1.49" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -22,10 +22,10 @@
 //
 // })
 
-$("#btn").click(function (){
-   console.log("Start");
-   var http=new XMLHttpRequest();
-   http.open("GET","db/db.txt",false);
+// $("#btn").click(function (){
+//    console.log("Start");
+//    var http=new XMLHttpRequest();
+//    http.open("GET","db/db.txt",false);
 
 
  //  http.responseText;
@@ -39,7 +39,9 @@ $("#btn").click(function (){
    //       console.log(http.responseText)
    //    }
    // }
-   http.send();
- console.log(http.responseText);
-   console.log("End")
-})
+//    http.send();
+//  console.log(http.responseText);
+//    console.log("End")
+// })
+
+

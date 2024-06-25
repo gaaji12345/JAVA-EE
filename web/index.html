@@ -16,7 +16,7 @@
 
   <div class="row mt-3">
     <div class="col-5">
-      <form >
+      <form action="customer" method="post">
         <div class="mb-3">
           <label for="cusID" class="" >Customer -ID</label>
           <input type="text"  class="form-control" id="cusID" placeholder="Customer ID" name="customerId">
@@ -72,8 +72,71 @@
       </table>
     </div>
   </div>
+
 </section>
 
+<section class="container mt-3">
+
+  <div class="row mt-3">
+    <div class="col-5">
+      <form action="item">
+        <div class="mb-3">
+          <label for="ItemCode" class="" >Item -Code</label>
+          <input type="text"  class="form-control" id="itemCode" placeholder="CODE" name="itemCode">
+        </div>
+        <div class="mb-3">
+          <label for="ItemDesc" class="" >Item -Name</label>
+          <input type="text" class="form-control" id="itemDesc" placeholder="Item Name" name="itemDesc">
+        </div>
+        <div class="mb-3">
+          <label for="cusAddress" class="" >Item-Desc</label>
+          <input type="text" class="form-control" id="itemUnitPrice" placeholder="Item-Desc" name="itemUnitPrice">
+        </div>
+        <div class="mb-3">
+          <label for="cusSalary" class="" >Item-Qty</label>
+          <input type="text" class="form-control" id="itemQty" placeholder="Customer Salary" name="itemQty">
+        </div>
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+
+  <hr>
+
+
+
+  <div class="row">
+    <div class="col-2">
+      <button  class=" btn btn-danger" id="btnItemJson" >Send Rq Json</button>
+    </div>
+    <div class="col">
+
+      <table  class="table table-bordered table-hover">
+        <thead class="bg-danger text-white">
+        <tr>
+          <th>ID</th>
+          <th>DESC</th>
+          <th>PRICE</th>
+          <th> QTY</th>
+        </tr>
+        </thead>
+        <tbody id="tbItemjson">
+<!--        <tr>-->
+<!--          <td></td>-->
+<!--          <td></td>-->
+<!--          <td></td>-->
+<!--          <td></td>-->
+<!--        </tr>-->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</section>
 
 
 
@@ -82,26 +145,8 @@
 
 
 <script src="accests/jquery-3.7.1.min.js"></script>
-<script>
+<script src="accests/servlet.js"></script>
 
-  $("#btn3").click(function (){
-    // $('#tbjson').empty();
-    $.ajax({
-      url:"customer",
-       method:"GET",
-      dataType:"json",//please convert the response into jason
-      success:function (resp){
-        for (const customer of resp){
-          // $("#tbjson").empty();
-          console.log( typeof resp);
-          let row=`<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
-          $("#tbjson").append(row);
-        }
-
-      }
-    })
-  });
-</script>
 
 </body>
 </html>
