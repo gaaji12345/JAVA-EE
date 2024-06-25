@@ -112,6 +112,39 @@ public class CustomerServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String cid = req.getParameter("customerId");
+        String name = req.getParameter("customerName");
+        String add = req.getParameter("customerAddress");
+        String salary = req.getParameter("customerSalary");
+
+        System.out.println(cid + " " + name + "  " + add + " " + salary);
+
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "Prabath550@");
+            PreparedStatement pstm = connection.prepareStatement("update customer set  name=?,address=?,salary=?  where id=? ");
+
+            pstm.setObject(1, name);
+            pstm.setObject(2, add);
+            pstm.setObject(3, salary);
+            pstm.setObject(4, cid);
+            boolean b = pstm.executeUpdate() > 0;
+            PrintWriter writer = resp.getWriter();
+            if (b) {
+                writer.write("Customer Updated..!");
+            }
+
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 
 
