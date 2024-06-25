@@ -26,7 +26,7 @@ $("#btnsave").click(function (){
 
 
 $("#btndelete").click(function (){
-    var formdata=   $("#cusID").val();
+    var formdata= $("#cusID").val();
     $.ajax({
         url: "customer?cusID="+formdata,
         method: "DELETE",
@@ -42,7 +42,20 @@ $("#btndelete").click(function (){
 
 
 $("#btnUpdate").click(function (){
+    var formdata=   $("#customerForm").serialize();
 
+    $.ajax({
+        url: "customer?"+formdata,
+        method: "PUT",
+        // data: formdata,
+        success: function (res) {
+            console.log(res)
+
+            // alert(res);
+            loadAllCustomers();
+
+        }
+    })
 });
 
 
@@ -68,9 +81,9 @@ function loadAllCustomers(){
 function rowBack(){
     $("#tbjson>tr").click(function (){
         let id= $(this).children().eq(0).text();
-        let name= $(this).children().eq(0).text();
-        let address= $(this).children().eq(0).text();
-        let salary= $(this).children().eq(0).text();
+        let name= $(this).children().eq(1).text();
+        let address= $(this).children().eq(2).text();
+        let salary= $(this).children().eq(3).text();
 
         $("#cusID").val(id);
         $("#cusName").val(name);
