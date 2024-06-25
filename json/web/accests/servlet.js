@@ -41,6 +41,11 @@ $("#btndelete").click(function (){
 })
 
 
+$("#btnUpdate").click(function (){
+
+});
+
+
 function loadAllCustomers(){
     $("#tbjson").empty();
     $.ajax({
@@ -54,7 +59,27 @@ function loadAllCustomers(){
                 let row=`<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
                 $("#tbjson").append(row);
             }
-
+     rowBack();
         }
     })
+}
+
+
+function rowBack(){
+    $("#tbjson>tr").click(function (){
+        let id= $(this).children().eq(0).text();
+        let name= $(this).children().eq(0).text();
+        let address= $(this).children().eq(0).text();
+        let salary= $(this).children().eq(0).text();
+
+        $("#cusID").val(id);
+        $("#cusName").val(name);
+        $("#cusAddress").val(address);
+        $("#cusSalary").val(salary);
+
+
+
+    })
+
+
 }
