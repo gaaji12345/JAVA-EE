@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Cruds/Cruds.iml" filepath="$PROJECT_DIR$/Cruds/Cruds.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Json1/Json1.iml" filepath="$PROJECT_DIR$/Json1/Json1.iml" />
       <module fileurl="file://$PROJECT_DIR$/json/json.iml" filepath="$PROJECT_DIR$/json/json.iml" />
       <module fileurl="file://$PROJECT_DIR$/testdb.iml" filepath="$PROJECT_DIR$/testdb.iml" />
     </modules>
