@@ -15,7 +15,7 @@ $("#btnsave").click(function (){
        method: "POST",
        data:data,
        success:function (res){
-           console.log(res);
+          alert(res);
            loadAllCustomers();
 
        }
@@ -26,6 +26,7 @@ $("#btnsave").click(function (){
 
 
 function loadAllCustomers(){
+    $("#tbjson").empty();
     $.ajax({
         url:"customer",
         method:"GET",
