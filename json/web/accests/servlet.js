@@ -25,6 +25,22 @@ $("#btnsave").click(function (){
 });
 
 
+$("#btndelete").click(function (){
+    var formdata=   $("#cusID").val();
+    $.ajax({
+        url: "customer?cusID="+formdata,
+        method: "DELETE",
+        // data:data,
+        success:function (res){
+            alert(res);
+            loadAllCustomers();
+
+        }
+
+    })
+})
+
+
 function loadAllCustomers(){
     $("#tbjson").empty();
     $.ajax({
