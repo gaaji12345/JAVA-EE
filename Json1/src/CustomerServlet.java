@@ -45,12 +45,17 @@ public class CustomerServlet extends HttpServlet {
                 //addd to json array
                 arrayBuilder.add(objectBuilder.build());
 
-
-
             }
 
             PrintWriter writer = resp.getWriter();
-            writer.print(arrayBuilder.build());
+//            writer.print(arrayBuilder.build());
+
+            JsonObjectBuilder respo = Json.createObjectBuilder();
+            respo.add("code",200);
+            respo.add("message","Saved");
+            respo.add("data",arrayBuilder.build());
+
+            writer.print(respo.build());
 
 
         } catch (ClassNotFoundException e) {
@@ -69,7 +74,7 @@ public class CustomerServlet extends HttpServlet {
         String salary = req.getParameter("customerSalary");
 
         System.out.println(id + " " + name + "  " + add + " " + salary);
-
+        PrintWriter writer = resp.getWriter();
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -80,16 +85,37 @@ public class CustomerServlet extends HttpServlet {
             pstm.setObject(3, add);
             pstm.setObject(4, salary);
             boolean b = pstm.executeUpdate() > 0;
-            PrintWriter writer = resp.getWriter();
+
             if (b) {
-                writer.write("Customer added..!");
+                JsonObjectBuilder respo = Json.createObjectBuilder();
+                respo.add("code",200);
+                respo.add("message","Saved");
+                respo.add("data",respo.build());
+
+                writer.print(respo.build());
             }
 
 
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+
+            JsonObjectBuilder respo = Json.createObjectBuilder();
+            respo.add("code",500);
+            respo.add("message","EROOR");
+            respo.add("data",respo.build());
+
+            writer.print(respo.build());
+
+            e.printStackTrace();
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+            JsonObjectBuilder respo = Json.createObjectBuilder();
+            respo.add("code",500);
+            respo.add("message","EROOR");
+            respo.add("data",respo.build());
+
+            writer.print(respo.build());
+            e.printStackTrace();
         }
 
 
