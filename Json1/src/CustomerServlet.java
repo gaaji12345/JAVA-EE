@@ -73,8 +73,12 @@ public class CustomerServlet extends HttpServlet {
         String add = req.getParameter("customerAddress");
         String salary = req.getParameter("customerSalary");
 
+        resp.setContentType("application/json");
+
         System.out.println(id + " " + name + "  " + add + " " + salary);
         PrintWriter writer = resp.getWriter();
+
+
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -88,20 +92,24 @@ public class CustomerServlet extends HttpServlet {
 
             if (b) {
                 JsonObjectBuilder respo = Json.createObjectBuilder();
+                resp.setStatus(HttpServletResponse.SC_CREATED);
                 respo.add("code",200);
                 respo.add("message","Saved");
-                respo.add("data",respo.build());
+                respo.add("data","");
 
                 writer.print(respo.build());
             }
 
 
         } catch (ClassNotFoundException e) {
+            resp.setStatus(HttpServletResponse.SC_OK);
 
             JsonObjectBuilder respo = Json.createObjectBuilder();
-            respo.add("code",500);
-            respo.add("message","EROOR");
-            respo.add("data",respo.build());
+
+            respo.add("code",400);
+            respo.add("message","Erorr");
+            respo.add("data",e.getLocalizedMessage());
+
 
             writer.print(respo.build());
 
@@ -110,11 +118,13 @@ public class CustomerServlet extends HttpServlet {
         } catch (SQLException e) {
 
             JsonObjectBuilder respo = Json.createObjectBuilder();
-            respo.add("code",500);
+
+            respo.add("code",400);
             respo.add("message","EROOR");
-            respo.add("data",respo.build());
+            respo.add("data",e.getLocalizedMessage());
 
             writer.print(respo.build());
+            resp.setStatus(HttpServletResponse.SC_OK);
             e.printStackTrace();
         }
 
@@ -127,23 +137,56 @@ public class CustomerServlet extends HttpServlet {
 //        String id = req.getParameter("customerId");//null
         String id = req.getParameter("cusID");
         System.out.println(id);
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "Prabath550@");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ezypos", "root", "Prabath550@");
             PreparedStatement pstm = connection.prepareStatement("delete from customer where id=? ");
             pstm.setObject(1, id);
             boolean b = pstm.executeUpdate() > 0;
-            PrintWriter writer = resp.getWriter();
+
             if (b) {
-                writer.write("Customer deleted..!");
+                JsonObjectBuilder respo = Json.createObjectBuilder();
+                //resp.setStatus(HttpServletResponse.SC_CREATED);
+                respo.add("code",200);
+                respo.add("message","Deleted..!");
+                respo.add("data","");
+
+                writer.print(respo.build());
+            }else {
+                JsonObjectBuilder respo = Json.createObjectBuilder();
+                //resp.setStatus(HttpServletResponse.SC_CREATED);
+                respo.add("code",400);
+                respo.add("message","");
+                respo.add("data","Wrong Id");
+
+                writer.print(respo.build());
             }
 
 
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            resp.setStatus(200);
+            JsonObjectBuilder respo = Json.createObjectBuilder();
+           // resp.setStatus(HttpServletResponse.SC_CREATED);
+            respo.add("code",500);
+            respo.add("message","EROOR..!");
+            respo.add("data",e.getLocalizedMessage());
+
+            writer.print(respo.build());
+
+           // resp.sendError(500,e.getMessage());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            resp.setStatus(200);
+            JsonObjectBuilder respo = Json.createObjectBuilder();
+           // resp.setStatus(HttpServletResponse.SC_CREATED);
+            respo.add("code",500);
+            respo.add("message","EROOR..!");
+            respo.add("data",e.getLocalizedMessage());
+
+            writer.print(respo.build());
+           // resp.sendError(500,e.getMessage());
         }
     }
 
