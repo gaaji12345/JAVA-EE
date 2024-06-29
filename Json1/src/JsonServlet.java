@@ -8,7 +8,7 @@ import javax.json.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = "/customer")
+@WebServlet(urlPatterns = "/json")
 public class JsonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,6 +56,21 @@ public class JsonServlet extends HttpServlet {
         System.out.print(id+" "+name);
 
 
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JsonReader reader = Json.createReader(req.getReader());
+        JsonArray jsonValues = reader.readArray();
+         for (JsonValue js: jsonValues){
+             String id = js.asJsonObject().getString("id");
+             String name = js.asJsonObject().getString("name");
+             String address= js.asJsonObject().getString("address");
+             String salary = js.asJsonObject().getString("salary");
+
+             System.out.println(id+""+name+""+address+""+salary);
+         }
 
     }
 }
