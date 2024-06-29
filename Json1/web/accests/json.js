@@ -15,8 +15,18 @@ $("#btnsave").click(function (){
         method: "POST",
         data:data,
         success:function (res){
-            alert(res);
-            loadAllCustomers();
+            if (res.code==200){
+                alert(res.messages);
+                loadAllCustomers();
+            }else {
+                alert(res.data)
+            }
+
+
+        },
+        error:function (ob,textStatus,error){
+            alert(textStatus);
+            console.log(ob.responseText)
 
         }
 
@@ -32,9 +42,22 @@ $("#btndelete").click(function (){
         method: "DELETE",
         // data:data,
         success:function (res){
-            alert(res);
-            loadAllCustomers();
 
+            if (res.code==200){
+                alert(res.messages);
+                loadAllCustomers();
+            }else if (res.code==400){
+                alert(res.data);
+            }else {
+                alert(res.data);
+            }
+
+
+        },
+        error:function (ob,status,txt){
+            console.log(ob);
+            console.log(status);
+            console.log(txt);
         }
 
     })
@@ -68,7 +91,7 @@ function loadAllCustomers(){
         success:function (r){
             for (const customer of r.data){
                 // $("#tbjson").empty();
-                console.log( typeof r);
+               // console.log( typeof r);
                 let row=`<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
                 $("#tbjson").append(row);
             }
