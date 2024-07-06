@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="accests/css/bootstrap.min.css">
+</head>
+<body>
+
+<section class="container-fluid p-4 bg-primary text-white">
+  <h1>Hello Ajax</h1>
+
+</section>
+
+<section class="container mt-3">
+
+  <div class="row mt-3">
+    <div class="col-5">
+      <form id="customerForm">
+        <div class="mb-3">
+          <label for="cusID" class="" >Customer -ID</label>
+          <input type="text"  class="form-control" id="cusID" placeholder="Customer ID" name="customerId">
+        </div>
+        <div class="mb-3">
+          <label for="cusName" class="" >Customer -Name</label>
+          <input type="text" class="form-control" id="cusName" placeholder="Customer Name" name="customerName">
+        </div>
+        <div class="mb-3">
+          <label for="cusAddress" class="" >Customer -Address</label>
+          <input type="text" class="form-control" id="cusAddress" placeholder="Customer Address" name="customerAddress">
+        </div>
+        <div class="mb-3">
+          <label for="cusSalary" class="" >Customer -Salary</label>
+          <input type="text" class="form-control" id="cusSalary" placeholder="Customer Salary" name="customerSalary">
+        </div>
+        <div class="mb-3">
+      <button type="button" class="btn btn-primary" id="savebtn">Save</button>
+          <button type="button" class="btn btn-danger" id="deletebtn">Delete</button>
+          <button type="button" class="btn btn-outline-primary" id="btnupdate">Update</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+
+  <hr>
+
+
+
+  <div class="row">
+    <div class="col-2">
+      <button class=" btn btn-danger" id="btn3">Send Rq Json</button>
+    </div>
+    <div class="col">
+
+      <table  class="table table-bordered table-hover">
+        <thead class="bg-danger text-white">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th> Salary</th>
+        </tr>
+        </thead>
+        <tbody id="tbjson">
+         <tr>
+           <td></td>
+           <td></td>
+           <td></td>
+           <td></td>
+         </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!--<p id="p2">Gajjiiii</p>-->
+
+
+<script src="accests/jquery-3.7.1.min.js"></script>
+<script>
+
+  function  loadAllCustomer(){
+    $('#tbjson').empty();
+    $.ajax({
+      url:"http://localhost:6028/filter/customer?option=GETALL",
+      method:"GET",
+      // dataType:"json",//please convert the response into jason
+      success:function (resp){
+        for (const customer of resp.data){
+          // $("#tbjson").empty();
+          let row=`<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`
+          $("#tbjson").append(row);
+        }
+        callmethod();
+      }
+    })
+  }
+
+
+
+  $("#btn3").click(function (){
+    loadAllCustomer();
+  });
+
+  $("#savebtn").click(function (){
+    var data= $("#customerForm").serialize();
+    console.log(data);
+    $.ajax({
+      url:"http://localhost:6028/filter/customer",
+      method:"POST",
+      data:data,
+      success:function (res){
+        if (res.status == 200){
+          alert(res.message);
+          loadAllCustomer();
+
+        }else {
+          alert(res.data)
+        }
+        // console.log(res);
+      },
+      error:function (ob,txtStatus,error){
+        alert(txtStatus);
+
+      }
+    })
+
+  });
+
+  $("#deletebtn").click(function (){
+    let customerID = $("#cusID").val();
+    $.ajax({
+      url:"http://localhost:6028/filter/customer?cusID="+customerID,
+      method:"DELETE",
+      // data:data ,
+      success:function (res){
+        console.log(res)
+        if (res.status==200){
+          alert(res.message);
+          loadAllCustomer();
+
+        }else if (res.status==400){
+          alert(res.data);
+        }else {
+          alert(res.data)
+        }
+
+      },
+      error:function (ob,status,t){
+        console.log(ob);
+        console.log(status);
+        console.log(t);
+
+      }
+    })
+  })
+
+  $("#btnupdate").click(function (){
+
+    var cusOb={
+      id: $('#cusID').val(),
+      name:$('#cusName').val(),
+      address: $('#cusAddress').val(),
+      salary:$('#cusSalary').val()
+    }
+
+    console.log(formdata);
+    $.ajax({
+      url:"customer",
+      method:"PUT",
+      contentType:"application/json",//request contetnt type json
+      data:JSON.stringify(cusOb),
+      success:function (res){
+    if (res.status=200){
+      alert(res.message)
+      loadAllCustomer();
+    }else if (res.status==400){
+      alert(res.message)
+    }else {
+      alert(res.data)
+    }
+
+      },
+      error:function (ob,txtStatus,error){
+        alert(txtStatus);
+        console.log(ob.responseText)
+      }
+    })
+
+  })
+
+  function callmethod(){
+    $("#tbjson>tr").click(function (){
+      let id=$(this).children().eq(0).text();
+      let name=$(this).children().eq(1).text();
+      let address=$(this).children().eq(2).text();
+      let salary=$(this).children().eq(3).text();
+
+      $("#cusID").val(id);
+      $("#cusName").val(name);
+      $("#cusAddress").val(address);
+      $("#cusSalary").val(salary);
+
+
+
+    })
+  }
+
+</script>
+
+</body>
+</html>
