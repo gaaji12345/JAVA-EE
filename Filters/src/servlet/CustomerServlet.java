@@ -151,7 +151,7 @@ public class CustomerServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         resp.setContentType ( "application/json");
 
-      //  resp.addHeader("Access-Control-Allow-Origin","*");
+       resp.addHeader("Access-Control-Allow-Origin","*");
         try {
 
             Connection connection = ds.getConnection();
@@ -254,10 +254,10 @@ public class CustomerServlet extends HttpServlet {
         }
     }
 
-//    @Override
-//    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.addHeader("Access-Control-Allow-Origin","*");//
-//        resp.addHeader("Access-Control-Allow-Methods","DELETE, PUT");
-//       resp.addHeader("Access-Control-Allow-Headers","Content-Type");//for put error
-//    }
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.addHeader("Access-Control-Allow-Origin","*");//
+        resp.addHeader("Access-Control-Allow-Methods","DELETE, PUT");
+       resp.addHeader("Access-Control-Allow-Headers","Content-Type");//for put error
+    }
 }
